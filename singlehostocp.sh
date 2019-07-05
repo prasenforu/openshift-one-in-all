@@ -9,8 +9,8 @@
 # Or you can use <Host PUBLIC IP>.nip.io
 
 
-PUB_IP=34.83.130.146
-PRI_IP=10.138.0.17
+PUB_IP=<PUT PUBLIC IP>
+PRI_IP=<PUT HOST IP>
 #PRI_IP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '172'`
 NAME=`hostname`
 DOCDISK=sdb
@@ -24,8 +24,8 @@ echo "STEP-1 Package download & install .."
 
 yum install -y git dos2unix
 
-git clone https://github.com/prasenforu/openshift-one-in-all.git /root/openshift-one-in-all/
-sleep 5
+#git clone https://github.com/prasenforu/openshift-one-in-all.git /root/openshift-one-in-all/
+#sleep 5
 git clone https://github.com/openshift/openshift-ansible.git /root/openshift-ansible/
 sleep 8
 
