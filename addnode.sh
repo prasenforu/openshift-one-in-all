@@ -15,6 +15,8 @@ DOCDISK=sdb
 echo "STEP-1 Passwordless login .."
 
 scp -i prasen.pem /root/.ssh/id_rsa.pub centos@$NEWNODE:/home/centos/.ssh/id_rsa.pub_root
+ssh centos@$NEWNODE -i prasen.pem "sudo mkdir /root/.ssh"
+ssh centos@$NEWNODE -i prasen.pem "sudo touch /root/.ssh/authorized_keys"
 ssh centos@$NEWNODE -i prasen.pem "sudo mv /home/centos/.ssh/id_rsa.pub_root /root/.ssh/authorized_keys"
 ssh centos@$NEWNODE -i prasen.pem "sudo chown root:root /root/.ssh/authorized_keys"
 ssh centos@$NEWNODE -i prasen.pem "sudo chmod 600 /root/.ssh/authorized_keys"
@@ -29,7 +31,7 @@ ssh centos@$NEWNODE -i prasen.pem "sudo service sshd restart"
 echo "STEP-2 Package download & install .."
 
 ssh $NEWNODE "yum install -y wget git net-tools bind-utils iptables-services bridge-utils pythonvirtualenv gcc bash-completion ansible kexec-tools sos psacct yum-utils"
-ssh $NEWNODE "yum install -y centos-release-openshift-origin311"
+ssh $NEWNODE "yum install -y centos-release-openshift-origin311 docker"
 
 
 ### STEP-3 Docker setup & enable-disable services
@@ -37,8 +39,8 @@ ssh $NEWNODE "yum install -y centos-release-openshift-origin311"
 echo "STEP-3 Docker setup & enable-disable services .."
 
 touch /root/openshift-one-in-all/docker-storage-setup
-#echo "DEVS=/dev/$DOCDISK" > /root/openshift-one-in-all/docker-storage-setup
-#echo "VG=docker-vg" >> /root/openshift-one-in-all/docker-storage-setup
+echo "DEVS=/dev/$DOCDISK" > /root/openshift-one-in-all/docker-storage-setup
+echo "VG=docker-vg" >> /root/openshift-one-in-all/docker-storage-setup
 
 ssh $NEWNODE "cp /etc/sysconfig/docker-storage-setup /etc/sysconfig/docker-storage-setup_bkp"
 ssh $NEWNODE "sed -i \"/^OPTIONS=/ s:.*:OPTIONS=\'--selinux-enabled --insecure-registry 172.30.0.0\/16\':\" /etc/sysconfig/docker"
@@ -68,7 +70,7 @@ sed -i "s/#//g" /root/openshift-one-in-all/allinonehost
 
 echo "STEP-5 Start new node adding .."
 
-#ansible-playbook -i /root/openshift-one-in-all/allinonehost /root/openshift-ansible/playbooks/openshift-node/scaleup.yml
+ansible-playbook -i /root/openshift-one-in-all/allinonehost /root/openshift-ansible/playbooks/openshift-node/scaleup.yml
 
 ### RUN Post installation step
 
