@@ -31,7 +31,7 @@ DOMAIN=cloudapps.tcs-ally.tk
 
 Please provide host ip in variable. If you run docker in saperate storage, Please provide disk name (run ```lsblk``` command to ger 2nd disk) and uncomment 2 lines in STEP-3 "Docker setup". 
 
-#### Add pem key content to prasen.pem file & change prmission
+#### Add pem key content to prasen.pem file & change permission
 
 ```
 chmod 400 prasen.pem
