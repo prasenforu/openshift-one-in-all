@@ -2,6 +2,7 @@
 masters
 nodes
 etcd
+#new_nodes
 
 [OSEv3:vars]
 ansible_ssh_common_args='-o StrictHostKeyChecking=no'
@@ -30,3 +31,6 @@ ocpallinone  openshift_ip=IIIIIIII
 
 [nodes]
 ocpallinone  openshift_ip=IIIIIIII  openshift_node_group_name="node-config-all-in-one"  openshift_schedulable=true
+
+#[new_nodes]
+#ocpcluster2node1  openshift_ip=NNNNNNNNN  openshift_node_group_name="node-config-all-in-one"  openshift_schedulable=true
