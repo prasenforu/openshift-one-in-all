@@ -24,16 +24,16 @@ echo "STEP-1 Package download & install .."
 
 yum install -y git dos2unix
 
-git clone https://github.com/prasenforu/openshift-origin-aws.git /root/openshift-origin-aws/
+git clone https://github.com/prasenforu/openshift-one-in-all.git /root/openshift-one-in-all/
 sleep 5
 git clone https://github.com/openshift/openshift-ansible.git /root/openshift-ansible/
 sleep 8
 
-cd /root/openshift-origin-aws/
+cd /root/openshift-one-in-all/
 dos2unix *
 cd /root/openshift-ansible/
 git checkout release-3.11
-cd /root/openshift-origin-aws/
+cd /root/openshift-one-in-all/
 
 yum install -y docker wget net-tools bind-utils iptables-services bridge-utils pythonvirtualenv gcc bash-completion ansible kexec-tools sos psacct yum-utils
 yum install -y centos-release-openshift-origin311
@@ -85,24 +85,24 @@ sudo service sshd restart
 
 echo "STEP-5 Prepare ansible hostfile .."
 
-cp /root/openshift-origin-aws/allinonehost /root/openshift-origin-aws/allinonehost_bkp
+cp /root/openshift-one-in-all/allinonehost /root/openshift-one-in-all/allinonehost_bkp
 
-sed -i "s/PPPPPPPP/$PUB_IP/g" /root/openshift-origin-aws/allinonehost
-sed -i "s/IIIIIIII/$PRI_IP/g" /root/openshift-origin-aws/allinonehost
-sed -i "s/ocpallinone/$NAME/g" /root/openshift-origin-aws/allinonehost
-sed -i "s/$PUB_IP.nip.io/$DOMAIN/g" /root/openshift-origin-aws/allinonehost
+sed -i "s/PPPPPPPP/$PUB_IP/g" /root/openshift-one-in-all/allinonehost
+sed -i "s/IIIIIIII/$PRI_IP/g" /root/openshift-one-in-all/allinonehost
+sed -i "s/ocpallinone/$NAME/g" /root/openshift-one-in-all/allinonehost
+sed -i "s/$PUB_IP.nip.io/$DOMAIN/g" /root/openshift-one-in-all/allinonehost
 
 ### Run Openshift Prerequistics
 
 echo "STEP-6 Run Openshift Prerequistics .."
 
-ansible-playbook -i /root/openshift-origin-aws/allinonehost /root/openshift-ansible/playbooks/prerequisites.yml
+ansible-playbook -i /root/openshift-one-in-all/allinonehost /root/openshift-ansible/playbooks/prerequisites.yml
 
 ### Start Openshift Installation
 
 echo "STEP-7 Start Openshift Installation .."
 
-ansible-playbook -i /root/openshift-origin-aws/allinonehost /root/openshift-ansible/playbooks/deploy_cluster.yml
+ansible-playbook -i /root/openshift-one-in-all/allinonehost /root/openshift-ansible/playbooks/deploy_cluster.yml
 
 ### RUN Post installation step
 
