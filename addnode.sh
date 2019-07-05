@@ -6,8 +6,7 @@
 # disk name (run lsblk command to ger 2nd disk) and
 # uncomment 2 lines in STEP-3 "Docker setup".
 
-PRI_IP=10.138.0.17
-#PRI_IP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1' | grep -v '172'`
+PRI_IP=<PUT NEW HOST IP>
 NEWNODE=<PUT NEW HOSTNAME>
 DOCDISK=sdb
 
