@@ -19,7 +19,7 @@ The picture below shows the architecture of Yelb:
 oc new-project sample-app
 oc create sa yelb
 oc adm policy add-scc-to-user anyuid system:serviceaccount:sample-app:yelb
-oc create -f
+oc create -f sample-app.yaml
 oc expose service/yelb-ui
 oc get all
 ```
