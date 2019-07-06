@@ -22,8 +22,6 @@ Edit following variable as per requirement then run script ```singlehostocp.sh``
 PUB_IP=<PUT PUBLIC IP>
 PRI_IP=<PUT HOST IP>
 DOCDISK=sdb
-USER1=admin
-USER2=pkar
 DOMAIN=cloudapps.tcs-ally.tk
 ```
 
