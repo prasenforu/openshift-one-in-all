@@ -39,8 +39,8 @@ ssh $NEWNODE "yum install -y centos-release-openshift-origin311 docker"
 echo "STEP-3 Docker setup & enable-disable services .."
 
 touch /root/openshift-one-in-all/docker-storage-setup
-echo "DEVS=/dev/$DOCDISK" > /root/openshift-one-in-all/docker-storage-setup
-echo "VG=docker-vg" >> /root/openshift-one-in-all/docker-storage-setup
+#echo "DEVS=/dev/$DOCDISK" > /root/openshift-one-in-all/docker-storage-setup
+#echo "VG=docker-vg" >> /root/openshift-one-in-all/docker-storage-setup
 
 ssh $NEWNODE "cp /etc/sysconfig/docker-storage-setup /etc/sysconfig/docker-storage-setup_bkp"
 ssh $NEWNODE "sed -i \"/^OPTIONS=/ s:.*:OPTIONS=\'--selinux-enabled --insecure-registry 172.30.0.0\/16\':\" /etc/sysconfig/docker"
@@ -74,8 +74,8 @@ ansible-playbook -i /root/openshift-one-in-all/allinonehost /root/openshift-ansi
 
 ### RUN Post installation step
 
-#echo "STEP-8 Running Post installation steps .."
+echo "STEP-8 Running Post installation steps .."
 
-#Edit NEWNODE labels & remove master and infra labels
+echo "Edit NEWNODE labels & remove master and infra labels with below command .."
 
-#oc edit node $NEWNODE
+echo "oc edit node $NEWNODE"
