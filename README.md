@@ -12,7 +12,7 @@ cd /root/openshift-one-in-all/
 dos2unix *
 ```
 
-### Single node installation
+### Openshift Single node installation
 
 Please provide host ip  & host PUBLIC IP in variable. If you run docker in saperate storage, Please provide disk name (run ```lsblk``` command to ger 2nd disk) and uncomment 2 lines in STEP-2 "Docker setup". Set wild card DNS in DOMAIN (ex. cloudapps.tcs-ally.tk) or you can use Host_PUBLIC_IP.nip.io
 
@@ -25,6 +25,15 @@ DOCDISK=sdb
 USER1=admin
 USER2=pkar
 DOMAIN=cloudapps.tcs-ally.tk
+```
+
+### Post installation
+
+Edit following variable as per requirement then run script ```post-installation.sh```
+
+```
+USER1=admin
+USER2=pkar
 ```
 
 ### Add node in cluster
