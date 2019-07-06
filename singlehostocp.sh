@@ -102,7 +102,8 @@ ansible-playbook -i /root/openshift-one-in-all/allinonehost /root/openshift-ansi
 
 echo "STEP-7 Start Openshift Installation .."
 
-ansible-playbook -i /root/openshift-one-in-all/allinonehost /root/openshift-ansible/playbooks/deploy_cluster.yml
+echo "Make sure Prerequistics runs without error ... If yes then run below command .."
+echo "ansible-playbook -i /root/openshift-one-in-all/allinonehost /root/openshift-ansible/playbooks/deploy_cluster.yml"
 
 ### RUN Post installation step
 
