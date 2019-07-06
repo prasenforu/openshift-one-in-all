@@ -38,7 +38,7 @@ chmod 400 prasen.pem
 chmod 755 *.sh
 ```
 
-Then edit following variable as per requirement then run script ```addnode.sh```
+Then edit following variable as per requirement & run script ```addnode.sh```
 
 ```
 PRI_IP=<PUT NEW HOST IP>
