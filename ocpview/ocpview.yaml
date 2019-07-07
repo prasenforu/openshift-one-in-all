@@ -1,0 +1,96 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ocpview
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ocpview-role
+rules:
+  - apiGroups: ["extensions"]
+    resources:
+      - ingresses
+    verbs: ["get", "list"]
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - replicasets
+      - daemonsets
+      - statefulsets
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources:
+      - pods
+      - ingresses
+      - events
+      - endpoints
+      - namespaces
+      - nodes
+      - persistentvolumes
+      - persistentvolumeclaims
+      - resourcequotas
+      - services
+    verbs: ["get", "list"]
+  - nonResourceURLs: ["*"]
+    verbs: ["get", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ocpview
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ocpview-role
+subjects:
+  - kind: ServiceAccount
+    name: ocpview
+    namespace: ocp-view
+
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: ocpview
+  labels:
+    app: ocpview
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ocpview
+  template:
+    metadata:
+      labels:
+        app: ocpview
+    spec:
+      serviceAccountName: ocpview
+      containers:
+      - name: ocpview-containers
+
+        image: bencuk/kubeview:latest
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8000
+
+        resources:
+          limits:
+            memory: "128M"
+            cpu: "0.1"
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ocpview
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8000
+  selector:
+    app: ocpview
