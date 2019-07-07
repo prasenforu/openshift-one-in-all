@@ -1,3 +1,29 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: sample-app-db-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: gluster-storage
+  
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: sample-app-redis-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: gluster-storage
+  
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -96,6 +122,14 @@ spec:
         image: redis:4.0.2
         ports:
         - containerPort: 6379
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+      volumes:
+      - persistentVolumeClaim:
+          claimName: sample-app-redis-pvc
+        name: redis-data
+
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -115,6 +149,14 @@ spec:
         image: mreferre/yelb-db:0.5
         ports:
         - containerPort: 5432
+        volumeMounts:
+        - name: db-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - persistentVolumeClaim:
+          claimName: sample-app-db-pvc
+        name: db-data
+
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
